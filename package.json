@@ -1,0 +1,17 @@
+{
+  "name": "skillbridge",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build:api": "cd apps/api && npm run build",
+    "build:web": "cd apps/web && npm run build",
+    "build:all": "npm run build:api && npm run build:web",
+    "build:css": "cd apps/web && node scripts/build-css.cjs src/styles.css"
+  },
+  "dependencies": {
+    "@angular/animations": "^22.0.8"
+  }
+}
