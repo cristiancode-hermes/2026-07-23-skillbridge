@@ -124,7 +124,7 @@ export class SessionFormComponent {
   protected scheduledAt = '';
   protected durationMinutes = 60;
   protected meetingLink = '';
-  protected notes = '';
+  protected text = '';
 
   protected isEdit = () => !!this.sessionId;
 
@@ -135,7 +135,7 @@ export class SessionFormComponent {
       return;
     }
 
-    this.exchangeService.getById(this.exchangeId).subscribe({
+    this.exchangeService.getById(String(this.exchangeId)).subscribe({
       next: () => this.loadingExchange.set(false),
       error: () => { this.error.set('Exchange not found'); this.loadingExchange.set(false); },
     });
@@ -162,10 +162,11 @@ export class SessionFormComponent {
     this.submitting.set(true);
     this.error.set('');
 
+    const scheduledDate = new Date(this.scheduledAt);
     const data = {
-      date: new Date(this.scheduledAt).toISOString(),
-      durationMinutes: this.durationMinutes,
-      notes: this.text || undefined,
+      date: scheduledDate.toISOString(),
+      startTime: scheduledDate.toTimeString().slice(0, 5),
+      duration: this.durationMinutes,
       location: this.meetingLink || undefined,
     };
 

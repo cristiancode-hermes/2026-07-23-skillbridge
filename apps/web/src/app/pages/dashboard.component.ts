@@ -180,7 +180,7 @@ export class DashboardComponent {
   private readonly toast = inject(ToastService);
 
   protected readonly currentUser = this.authService.currentUser;
-  protected readonly currentUserId = () => this.currentUser()?.id ?? 0;
+  protected readonly currentUserId = () => String(this.currentUser()?.id ?? 0);
 
   protected readonly stats = signal<DashboardStats | null>(null);
   protected readonly statsLoading = signal(true);
@@ -221,7 +221,7 @@ export class DashboardComponent {
     const status = this.activeTab() === 'all' ? undefined : this.activeTab();
     this.dashboardService.getExchanges(status).subscribe({
       next: (res) => {
-        this.exchanges.set(res.skills);
+        this.exchanges.set(res.exchanges);
         this.totalPages.set(res.total_pages);
         this.currentPage.set(res.page);
         this.exchangesLoading.set(false);
@@ -245,28 +245,28 @@ export class DashboardComponent {
     window.location.href = '/skills';
   }
 
-  protected acceptExchange(id: number): void {
+  protected acceptExchange(id: string | number): void {
     this.dashboardService['api']?.patch(`/exchanges/${id}/accept`).subscribe({
       next: () => { this.toast.success('Exchange accepted!'); this.loadExchanges(); },
       error: () => this.toast.error('Failed to accept exchange'),
     });
   }
 
-  protected declineExchange(id: number): void {
+  protected declineExchange(id: string | number): void {
     this.dashboardService['api']?.patch(`/exchanges/${id}/decline`).subscribe({
       next: () => { this.toast.success('Exchange declined'); this.loadExchanges(); },
       error: () => this.toast.error('Failed to decline exchange'),
     });
   }
 
-  protected completeExchange(id: number): void {
+  protected completeExchange(id: string | number): void {
     this.dashboardService['api']?.patch(`/exchanges/${id}/complete`).subscribe({
       next: () => { this.toast.success('Exchange completed!'); this.loadExchanges(); },
       error: () => this.toast.error('Failed to complete exchange'),
     });
   }
 
-  protected cancelExchange(id: number): void {
+  protected cancelExchange(id: string | number): void {
     this.dashboardService['api']?.patch(`/exchanges/${id}/cancel`).subscribe({
       next: () => { this.toast.success('Exchange cancelled'); this.loadExchanges(); },
       error: () => this.toast.error('Failed to cancel exchange'),

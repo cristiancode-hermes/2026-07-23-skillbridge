@@ -108,7 +108,7 @@ export class ReviewFormComponent {
 
   constructor() {
     if (!this.exchangeId) { this.error.set('Exchange not found'); this.loading.set(false); return; }
-    this.exchangeService.getById(this.exchangeId).subscribe({
+    this.exchangeService.getById(String(this.exchangeId)).subscribe({
       next: (ex) => { this.exchange.set(ex); this.loading.set(false); },
       error: () => { this.error.set('Exchange not found'); this.loading.set(false); },
     });
@@ -134,8 +134,8 @@ export class ReviewFormComponent {
 
     this.reviewService.create(this.exchangeId, {
       rating: this.rating,
-      comment: this.text || undefined,
-      targetId: targetId,
+      comment: this.comment || undefined,
+      reviewee_id: Number(targetId),
     }).subscribe({
       next: () => {
         this.submitting.set(false);

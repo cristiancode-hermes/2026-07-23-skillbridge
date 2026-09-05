@@ -153,7 +153,7 @@ export class ExchangeRequestComponent {
     this.exchangeService.create({
       skillId: skillId,
       receiverId: userId,
-      message: this.message || undefined,
+      message: this.message,
     }).subscribe({
       next: (exchange) => {
         this.submitting.set(false);

@@ -7,11 +7,11 @@ import { Message } from '../models';
 export class MessageService {
   constructor(private api: ApiService) {}
 
-  getByExchange(exchangeId: number): Observable<Message[]> {
+  getByExchange(exchangeId: string | number): Observable<Message[]> {
     return this.api.get<Message[]>(`/exchanges/${exchangeId}/messages`);
   }
 
-  create(exchangeId: number, text: string): Observable<Message> {
+  create(exchangeId: string | number, text: string): Observable<Message> {
     return this.api.post<Message>(`/exchanges/${exchangeId}/messages`, {
       text,
     });

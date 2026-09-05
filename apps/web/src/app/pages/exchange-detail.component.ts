@@ -215,18 +215,18 @@ export class ExchangeDetailComponent {
     });
   }
 
-  protected confirmSession(id: number): void {
+  protected confirmSession(id: string | number): void {
     this.sessionService.confirm(id).subscribe({
       next: () => { this.toast.success('Session confirmed!'); this.loadExchange(); },
       error: () => this.toast.error('Failed to confirm session'),
     });
   }
 
-  protected rescheduleSession(id: number): void {
+  protected rescheduleSession(id: string | number): void {
     this.router.navigate(['/exchanges', this.exchangeId, 'sessions', id, 'edit']);
   }
 
-  protected cancelSession(id: number): void {
+  protected cancelSession(id: string | number): void {
     this.sessionService.remove(id).subscribe({
       next: () => { this.toast.info('Session cancelled'); this.loadExchange(); },
       error: () => this.toast.error('Failed to cancel session'),

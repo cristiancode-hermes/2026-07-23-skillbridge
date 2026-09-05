@@ -66,7 +66,7 @@ import { ToastService } from '../shared/toast.component';
                     <div class="search-result-item" (click)="toggleSkill(s)">
                       <span class="skill-emoji-sm">{{ s.emoji || '📚' }}</span>
                       <span>{{ s.name }}</span>
-                      @if (selectedSkills().includes(s.id)) { <span class="check-mark">✓</span> }
+                      @if (isSkillSelected(s)) { <span class="check-mark">✓</span> }
                     </div>
                   }
                 </div>
@@ -182,6 +182,10 @@ export class OnboardingComponent {
   protected readonly selectedSkillMap = signal<Map<number, Skill>>(new Map());
   protected skillSearch = '';
 
+  protected isSkillSelected(skill: Skill): boolean {
+    return this.selectedSkills().includes(Number(skill.id));
+  }
+
   // Step 3: Availability
   protected readonly availability = signal<Record<number, { enabled: boolean; start: string; end: string }>>({
     0: { enabled: false, start: '09:00', end: '17:00' },
@@ -225,12 +229,12 @@ export class OnboardingComponent {
 
   protected toggleSkill(skill: Skill): void {
     const current = this.selectedSkills();
-    if (current.includes(skill.id)) {
-      this.selectedSkills.set(current.filter(id => id !== skill.id));
+    if (current.includes(Number(skill.id))) {
+      this.selectedSkills.set(current.filter(id => id !== Number(skill.id)));
     } else {
-      this.selectedSkills.set([...current, skill.id]);
+      this.selectedSkills.set([...current, Number(skill.id)]);
       const map = this.selectedSkillMap();
-      map.set(skill.id, skill);
+      map.set(Number(skill.id), skill);
       this.selectedSkillMap.set(new Map(map));
     }
   }

@@ -7,7 +7,7 @@ import { Skill, SkillCategory } from '../models';
 export class SkillService {
   constructor(private api: ApiService) {}
 
-  getAll(category?: string, search?: string, sort?: string, page?: number): Observable<{skills: Skill[], total: number, page: number}> {
+  getAll(category?: string, search?: string, sort?: string, page?: number): Observable<{skills: Skill[], total: number, page: number, total_pages: number}> {
     return this.api.get('/skills', { category, search, sort, page: page ?? 1 });
   }
 
@@ -19,7 +19,7 @@ export class SkillService {
     return this.api.get('/skills/search', { q: query });
   }
 
-  getById(id: string): Observable<Skill> {
+  getById(id: string | number): Observable<Skill> {
     return this.api.get(`/skills/${id}`);
   }
 }

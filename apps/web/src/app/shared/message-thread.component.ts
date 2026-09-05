@@ -79,7 +79,7 @@ import { MessageBubbleComponent } from './message-bubble.component';
   ],
 })
 export class MessageThreadComponent {
-  readonly exchangeId = input.required<number>();
+  readonly exchangeId = input.required<string | number>();
 
   private readonly messageService = inject(MessageService);
   private readonly authService = inject(AuthService);
@@ -98,7 +98,7 @@ export class MessageThreadComponent {
     });
   }
 
-  private loadMessages(exchangeId: number): void {
+  private loadMessages(exchangeId: string | number): void {
     this.messageService.getByExchange(exchangeId).subscribe({
       next: (msgs) => this.messages.set(msgs),
       error: () => this.messages.set([]),

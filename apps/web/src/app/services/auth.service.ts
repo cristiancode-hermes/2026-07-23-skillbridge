@@ -21,7 +21,7 @@ export interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly baseUrl = '/api/v1/auth';
+  private readonly baseUrl = '/api/auth';
   private readonly tokenKey = 'skillbridge_token';
 
   readonly isAuthenticated = signal<boolean>(this.hasToken());

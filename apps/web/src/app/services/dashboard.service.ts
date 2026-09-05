@@ -11,7 +11,7 @@ export class DashboardService {
     return this.api.get('/dashboard/stats');
   }
 
-  getExchanges(status?: string): Observable<Exchange[]> {
+  getExchanges(status?: string): Observable<{exchanges: Exchange[], total: number, page: number, total_pages: number}> {
     return this.api.get('/dashboard/exchanges', { status });
   }
 }

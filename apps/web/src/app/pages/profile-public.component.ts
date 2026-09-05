@@ -155,7 +155,7 @@ export class ProfilePublicComponent {
     this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
       if (id) this.loadProfile(id);
-      else this.loadProfile(this.authService.currentUser()?.id);
+      else this.loadProfile(Number(this.authService.currentUser()?.id));
     });
   }
 
@@ -180,7 +180,7 @@ export class ProfilePublicComponent {
       complete: () => this.skillsLoading.set(false),
     });
 
-    this.reviewService.getUserReviews(id).subscribe({
+    this.reviewService.getUserReviews(Number(id)).subscribe({
       next: (r) => this.reviews.set(r),
       error: () => this.reviews.set([]),
       complete: () => this.reviewsLoading.set(false),
